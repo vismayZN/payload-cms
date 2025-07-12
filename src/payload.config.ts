@@ -1,5 +1,5 @@
 // storage-adapter-import-placeholder
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 
 import sharp from 'sharp' // sharp-import
 import path from 'path'
@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
+import { Products } from './collections/Products'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
@@ -58,24 +58,36 @@ export default buildConfig({
     },
   },
   // This config helps us configure global or default features that the other editors can inherit
+
   editor: defaultLexical,
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI ?? 'file:../cms.db',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Products, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
-  plugins: [
-    ...plugins,
-    // storage-adapter-placeholder
-  ],
+  plugins: [...plugins],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  endpoints: [
+    {
+      path: '/health',
+      method: 'get',
+      handler: async () => {
+        return new Response('OK', {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+        })
+      },
+    },
+  ],
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {

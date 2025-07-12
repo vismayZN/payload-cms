@@ -6,15 +6,15 @@ import { home } from './home'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
 import { imageHero1 } from './image-hero-1'
-import { post1 } from './post-1'
-import { post2 } from './post-2'
-import { post3 } from './post-3'
+import { product1 } from './product-1'
+import { product2 } from './product-2'
+import { product3 } from './product-3'
 
 const collections: CollectionSlug[] = [
   'categories',
   'media',
   'pages',
-  'posts',
+  'products',
   'forms',
   'form-submissions',
   'search',
@@ -203,57 +203,57 @@ export const seed = async ({
     }),
   ])
 
-  payload.logger.info(`— Seeding posts...`)
+  payload.logger.info(`— Seeding products...`)
 
-  // Do not create posts with `Promise.all` because we want the posts to be created in order
+  // Do not create products with `Promise.all` because we want the products to be created in order
   // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
-  const post1Doc = await payload.create({
-    collection: 'posts',
+  const product1Doc = await payload.create({
+    collection: 'products',
     depth: 0,
     context: {
       disableRevalidate: true,
     },
-    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+    data: product1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
   })
 
-  const post2Doc = await payload.create({
-    collection: 'posts',
+  const product2Doc = await payload.create({
+    collection: 'products',
     depth: 0,
     context: {
       disableRevalidate: true,
     },
-    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
+    data: product2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
   })
 
-  const post3Doc = await payload.create({
-    collection: 'posts',
+  const product3Doc = await payload.create({
+    collection: 'products',
     depth: 0,
     context: {
       disableRevalidate: true,
     },
-    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
+    data: product3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
   })
 
-  // update each post with related posts
+  // update each product with related products
   await payload.update({
-    id: post1Doc.id,
-    collection: 'posts',
+    id: product1Doc.id,
+    collection: 'products',
     data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
+      relatedProducts: [product2Doc.id, product3Doc.id],
     },
   })
   await payload.update({
-    id: post2Doc.id,
-    collection: 'posts',
+    id: product2Doc.id,
+    collection: 'products',
     data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
+      relatedProducts: [product1Doc.id, product3Doc.id],
     },
   })
   await payload.update({
-    id: post3Doc.id,
-    collection: 'posts',
+    id: product3Doc.id,
+    collection: 'products',
     data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
+      relatedProducts: [product1Doc.id, product2Doc.id],
     },
   })
 
@@ -290,8 +290,8 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Posts',
-              url: '/posts',
+              label: 'Products',
+              url: '/products',
             },
           },
           {

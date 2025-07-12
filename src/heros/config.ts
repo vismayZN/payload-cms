@@ -8,6 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { Slider } from '@/blocks/SliderBlock/config'
 
 export const hero: Field = {
   name: 'hero',
@@ -16,7 +17,7 @@ export const hero: Field = {
     {
       name: 'type',
       type: 'select',
-      defaultValue: 'lowImpact',
+      defaultValue: 'none',
       label: 'Type',
       options: [
         {
@@ -24,16 +25,12 @@ export const hero: Field = {
           value: 'none',
         },
         {
-          label: 'High Impact',
-          value: 'highImpact',
+          label: 'Slider',
+          value: 'slider',
         },
         {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
-          label: 'Low Impact',
-          value: 'lowImpact',
+          label: 'Media',
+          value: 'media',
         },
       ],
       required: true,
@@ -62,10 +59,32 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['media'].includes(type),
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'slider',
+      type: 'array',
+      fields: [
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => ['slider'].includes(type),
+      },
+      required: true,
+    },
+    {
+      name: 'delay',
+      type: 'number',
+      defaultValue: 3000,
+      admin: { condition: (_, { type } = {}) => ['slider'].includes(type) },
     },
   ],
   label: false,

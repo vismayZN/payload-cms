@@ -3,29 +3,49 @@ version: '3'
 services:
   payload:
     image: node:18-alpine
+    container_name: payload
     ports:
       - '3000:3000'
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
+      - ./db:/home/node/app/db
+      - ./public:/home/node/app/public
     working_dir: /home/node/app/
     command: sh -c "yarn install && yarn dev"
-    depends_on:
-      - mongo
     env_file:
       - .env
+    restart: always
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '--quiet', 'http://localhost:3000']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network
 
-  mongo:
-    image: mongo:latest
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    container_name: caddy
     ports:
-      - '27017:27017'
-    command:
-      - --storageEngine=wiredTiger
+      - '80:80'
+      - '443:443'
     volumes:
-      - data:/data/db
-    logging:
-      driver: none
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - app-network
+    depends_on:
+      - payload
 
 volumes:
   data:
   node_modules:
+  caddy_data:
+  caddy_config:
+
+networks:
+  app-network:
+    driver: bridge

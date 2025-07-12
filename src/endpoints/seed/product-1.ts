@@ -1,13 +1,13 @@
 import type { Media, User } from '@/payload-types'
 import { RequiredDataFromCollectionSlug } from 'payload'
 
-export type PostArgs = {
+export type ProductArgs = {
   heroImage: Media
   blockImage: Media
   author: User
 }
 
-export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
+export const product1: (args: ProductArgs) => RequiredDataFromCollectionSlug<'products'> = ({
   heroImage,
   blockImage,
   author,
@@ -66,7 +66,7 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
                           format: 0,
                           mode: 'normal',
                           style: '',
-                          text: ' This content is fabricated and for demonstration purposes only. To edit this post, ',
+                          text: ' This content is fabricated and for demonstration purposes only. To edit this product, ',
                           version: 1,
                         },
                         {
@@ -309,7 +309,7 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
       image: heroImage.id,
       title: 'Digital Horizons: A Glimpse into Tomorrow',
     },
-    relatedPosts: [], // this is populated by the seed script
+    relatedProducts: [], // this is populated by the seed script
     title: 'Digital Horizons: A Glimpse into Tomorrow',
   }
 }

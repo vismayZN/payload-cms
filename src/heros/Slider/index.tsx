@@ -5,10 +5,19 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
+import clsx from 'clsx'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel'
+import { Media } from '@/components/Media'
+import Autoplay from 'embla-carousel-autoplay'
 
-export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
+export const SliderHero: React.FC<Page['hero']> = ({ links, slider, richText, delay }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -20,7 +29,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
       className="relative -mt-[10.4rem] flex items-center justify-center text-white"
       data-theme="dark"
     >
-      <div className="container mb-8 z-10 relative flex items-center justify-center">
+      <div className="container mb-8 z-10 absolute flex items-center justify-center">
         <div className="max-w-[36.5rem] md:text-center">
           {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
           {Array.isArray(links) && links.length > 0 && (
@@ -36,9 +45,21 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           )}
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
-        {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
+      <div className="h-full select-none -z-10 object-cover min-h-[80vh]">
+        {slider && typeof slider === 'object' && (
+          <div className="lg:container">
+            <Carousel plugins={[Autoplay({ delay: delay || 3000 })]}>
+              <CarouselContent>
+                {slider?.map(({ media }, index) => {
+                  return (
+                    <CarouselItem key={index}>
+                      <Media resource={media} />
+                    </CarouselItem>
+                  )
+                })}
+              </CarouselContent>
+            </Carousel>
+          </div>
         )}
       </div>
     </div>

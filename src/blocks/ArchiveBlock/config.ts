@@ -1,11 +1,17 @@
 import type { Block } from 'payload'
 
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
+  HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { Banner } from '../Banner/config'
+import { Code } from '../Code/config'
+import { MediaBlock } from '../MediaBlock/config'
+import { FormBlock } from '../Form/config'
 
 export const Archive: Block = {
   slug: 'archive',
@@ -19,8 +25,10 @@ export const Archive: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            BlocksFeature({ blocks: [Banner, Code, MediaBlock, FormBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            HorizontalRuleFeature(),
           ]
         },
       }),
@@ -47,12 +55,12 @@ export const Archive: Block = {
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
-      defaultValue: 'posts',
+      defaultValue: 'products',
       label: 'Collections To Show',
       options: [
         {
-          label: 'Posts',
-          value: 'posts',
+          label: 'Products',
+          value: 'products',
         },
       ],
     },
@@ -84,7 +92,7 @@ export const Archive: Block = {
       },
       hasMany: true,
       label: 'Selection',
-      relationTo: ['posts'],
+      relationTo: ['products'],
     },
   ],
   labels: {
