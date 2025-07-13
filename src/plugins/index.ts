@@ -10,6 +10,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { Plugin } from 'payload'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Page, Product } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -91,4 +92,9 @@ export const plugins: Plugin[] = [
     },
   }),
   payloadCloudPlugin(),
+  vercelBlobStorage({
+    collections: { media: true },
+    token: process.env.VERCEL_BLOB_STORAGE_TOKEN || '',
+    enabled: true,
+  }),
 ]

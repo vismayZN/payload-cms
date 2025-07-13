@@ -21,31 +21,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    networks:
-      - app-network
-
-  caddy:
-    image: caddy:2
-    restart: unless-stopped
-    container_name: caddy
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    networks:
-      - app-network
-    depends_on:
-      - payload
 
 volumes:
   data:
   node_modules:
-  caddy_data:
-  caddy_config:
-
-networks:
-  app-network:
-    driver: bridge
