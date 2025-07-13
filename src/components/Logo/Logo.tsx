@@ -1,29 +1,27 @@
+import { Header } from '@/payload-types'
 import clsx from 'clsx'
 import React from 'react'
+import { Media } from '../Media'
 
-interface Props {
+type Props = {
+  logo: Header['logo']
   className?: string
   loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
+  const { loading: loadingFromProps, className, logo } = props
 
   const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
+
+  if (!logo) return null
 
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
+    <Media
+      alt="Ng Group Logo"
       loading={loading}
-      fetchPriority={priority}
-      decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
+      resource={logo}
     />
   )
 }

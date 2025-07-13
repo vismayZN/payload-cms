@@ -38,21 +38,19 @@ export const SliderHero: React.FC<Page['hero']> = ({ links, slider, richText, de
           )}
         </div>
       </div>
-      <div className="h-full select-none -z-10 object-cover min-h-[80vh]">
+      <div className="min-h-[80vh] select-none">
         {slider && typeof slider === 'object' && (
-          <div className="lg:container">
-            <Carousel plugins={[Autoplay({ delay: delay || 3000 })]}>
-              <CarouselContent>
-                {slider?.map(({ media }, index) => {
-                  return (
-                    <CarouselItem key={index}>
-                      <Media resource={media} />
-                    </CarouselItem>
-                  )
-                })}
-              </CarouselContent>
-            </Carousel>
-          </div>
+          <Carousel plugins={[Autoplay({ delay: delay || 3000 })]} className="-z-10 object-cover">
+            <CarouselContent>
+              {slider?.map(({ media }, index) => {
+                return (
+                  <CarouselItem key={index}>
+                    <Media resource={media} />
+                  </CarouselItem>
+                )
+              })}
+            </CarouselContent>
+          </Carousel>
         )}
       </div>
     </div>
