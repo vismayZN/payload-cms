@@ -5,16 +5,9 @@ import React, { useEffect } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import RichText from '@/components/RichText'
-import clsx from 'clsx'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from '@/components/ui/carousel'
 import { Media } from '@/components/Media'
+import RichText from '@/components/RichText'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 
 export const SliderHero: React.FC<Page['hero']> = ({ links, slider, richText, delay }) => {

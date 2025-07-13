@@ -8,7 +8,6 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
-import { Slider } from '@/blocks/SliderBlock/config'
 
 export const hero: Field = {
   name: 'hero',

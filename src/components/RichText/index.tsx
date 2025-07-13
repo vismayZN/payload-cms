@@ -56,6 +56,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formBlock: ({ node }) => <FormBlock {...(node.fields as any)} />,
   },
 })

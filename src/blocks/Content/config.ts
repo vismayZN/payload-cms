@@ -1,19 +1,18 @@
 import type { Block, Field } from 'payload'
 
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
+  HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
-  BlocksFeature,
-  UploadFeature,
-  HorizontalRuleFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
-import { FormBlock } from '../Form/config'
 import { Banner } from '../Banner/config'
 import { Code } from '../Code/config'
+import { FormBlock } from '../Form/config'
 import { MediaBlock } from '../MediaBlock/config'
 
 const columnFields: Field[] = [
