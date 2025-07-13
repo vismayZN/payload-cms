@@ -14,6 +14,9 @@ importers:
       '@payloadcms/db-postgres':
         specifier: 3.47.0
         version: 3.47.0(payload@3.47.0(graphql@16.11.0)(typescript@5.8.3))
+      '@payloadcms/email-nodemailer':
+        specifier: ^3.47.0
+        version: 3.47.0(payload@3.47.0(graphql@16.11.0)(typescript@5.8.3))
       '@payloadcms/live-preview-react':
         specifier: 3.47.0
         version: 3.47.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
